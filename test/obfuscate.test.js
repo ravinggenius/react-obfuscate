@@ -1,3 +1,4 @@
+import styled from '@emotion/styled'
 import React from 'react'
 import Obfuscate from '../src/obfuscate.js'
 
@@ -45,5 +46,21 @@ describe('obfuscate', () => {
     expect(wrapper.find('span').text()).toBe("4321-454-502")
     expect(wrapper.prop('href')).toBeUndefined()
     expect(wrapper.prop('onClick')).toBeUndefined()
+  })
+
+  test('renders a fancy anchor', () => {
+    const Anchor = styled.a`
+      font-size: xx-large;
+    `
+
+    const wrapper = mount(
+      <Obfuscate element={Anchor} tel='205-454-1234' />
+    )
+
+    const innerA = wrapper.find('a')
+
+    expect(innerA.text()).toBe("4321-454-502")
+    expect(innerA.prop('href')).toEqual('obfuscated')
+    expect(innerA.prop('onClick')).toBeInstanceOf(Function)
   })
 })
